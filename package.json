@@ -1,0 +1,13 @@
+{
+  "name": "taskocalypse-lint-monster",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A gamified JavaScript linting and autofix hackathon MVP",
+  "scripts": {
+    "lint:sample": "eslint sample.js"
+  },
+  "devDependencies": {
+    "eslint": "^9.25.1",
+    "globals": "^16.0.0"
+  }
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taskocalypse — Lint Monster</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">T</span><span>TASK<span class="brand-accent">OCALYPSE</span></span></a>
+    <div class="top-right"><span class="online-dot"></span> SYSTEM ONLINE <span class="top-divider"></span><span class="player-tag">PLAYER 01</span></div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> ARCADE MODE / MISSION 004</div>
+        <h1>DEFEAT THE<br><span>LINT MONSTER</span></h1>
+        <p class="hero-sub">Your code is the battlefield. Find the bugs, fire up your attack, and clean your codebase for real.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="loadDemoBtn">▶ LOAD DEMO CODE</button>
+          <label class="btn btn-ghost upload-label" for="fileInput">＋ UPLOAD YOUR CODE</label>
+          <input id="fileInput" type="file" accept=".js,.mjs,.cjs" multiple hidden>
+        </div>
+        <div class="micro-note"><span class="pulse"></span> ESLINT ENGINE READY <span class="micro-sep">•</span> JS / MJS / CJS</div>
+      </div>
+      <div class="monster-stage">
+        <div class="stage-grid"></div>
+        <div class="stage-label">BOSS LEVEL 01</div>
+        <div class="monster-glow"></div>
+        <div class="monster" id="monster">
+          <div class="horn horn-left"></div><div class="horn horn-right"></div>
+          <div class="monster-ear ear-left"></div><div class="monster-ear ear-right"></div>
+          <div class="eyes"><i></i><i></i></div>
+          <div class="brow brow-left"></div><div class="brow brow-right"></div>
+          <div class="mouth"><span></span><span></span><span></span></div>
+          <div class="monster-body-mark">&lt;/&gt;</div>
+        </div>
+        <div class="monster-shadow"></div>
+        <div class="float-code code-a">{ }</div><div class="float-code code-b">;</div><div class="float-code code-c">!=</div>
+        <div class="boss-name">BUGZILLA <span>◆</span></div>
+        <div class="boss-health"><div class="health-meta"><span>BOSS HP</span><b id="bossHpText">100%</b></div><div class="health-track"><div id="bossHp" class="health-fill"></div></div></div>
+      </div>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat-card"><div class="stat-icon purple">✦</div><div><small>PLAYER LEVEL</small><strong id="levelValue">01</strong><span class="stat-foot">CODE ROOKIE</span></div></article>
+      <article class="stat-card"><div class="stat-icon orange">⚡</div><div><small>EXPERIENCE</small><strong><span id="xpValue">0</span><em> XP</em></strong><span class="stat-foot">NEXT LEVEL: 100 XP</span></div></article>
+      <article class="stat-card"><div class="stat-icon yellow">◈</div><div><small>COINS EARNED</small><strong id="coinValue">0</strong><span class="stat-foot">BUG BOUNTY</span></div></article>
+      <article class="stat-card"><div class="stat-icon green">✓</div><div><small>ISSUES DEFEATED</small><strong id="fixedValue">0</strong><span class="stat-foot">REAL FIXES APPLIED</span></div></article>
+    </section>
+
+    <section class="game-layout">
+      <div class="main-panel panel">
+        <div class="panel-heading"><div><span class="section-kicker">YOUR QUEST</span><h2>MISSION CONTROL</h2></div><span class="status-pill" id="missionStatus">AWAITING CODE</span></div>
+        <div class="mission-strip">
+          <div class="mission-symbol">⚔</div>
+          <div class="mission-info"><b>Clean the codebase</b><span>Scan your JavaScript and defeat fixable lint issues.</span></div>
+          <div class="mission-reward"><small>REWARD</small><b>+50 XP</b></div>
+        </div>
+        <div class="toolbar">
+          <div><span class="section-kicker">BATTLE REPORT</span><h3>Detected issues</h3></div>
+          <button id="scanBtn" class="btn btn-small btn-ghost">↻ SCAN CODE</button>
+        </div>
+        <div class="issue-summary">
+          <div class="issue-number"><strong id="errorCount">0</strong><span>ERRORS</span></div>
+          <div class="issue-number warning"><strong id="warningCount">0</strong><span>WARNINGS</span></div>
+          <div class="issue-number fixable"><strong id="fixableCount">0</strong><span>AUTO-FIXABLE</span></div>
+        </div>
+        <div id="fileList" class="file-list"><div class="empty-state"><span class="empty-icon">⌁</span><b>No code loaded yet</b><span>Load the demo code or upload a JavaScript file to begin your mission.</span></div></div>
+        <div class="battle-actions">
+          <button id="attackBtn" class="btn btn-attack" disabled>⚔ ATTACK / AUTO-FIX</button>
+          <button id="downloadBtn" class="btn btn-download" disabled>↓ DOWNLOAD FIXED CODE</button>
+        </div>
+        <p class="fine-print">Attacking runs ESLint's real <code>--fix</code> command on your uploaded files. Only safely auto-fixable issues are changed.</p>
+      </div>
+
+      <aside class="side-column">
+        <div class="panel player-panel">
+          <div class="panel-heading compact"><div><span class="section-kicker">PLAYER PROFILE</span><h2>CODE SLAYER</h2></div><div class="avatar">⌘</div></div>
+          <div class="level-row"><span>LEVEL <b id="levelSide">01</b></span><span id="xpProgressLabel">0 / 100 XP</span></div>
+          <div class="xp-track"><div id="xpProgress" class="xp-fill"></div></div>
+          <div class="player-quote">“One bug at a time. One clean commit at a time.”</div>
+        </div>
+        <div class="panel log-panel">
+          <div class="panel-heading compact"><div><span class="section-kicker">LIVE FEED</span><h2>ACTIVITY LOG</h2></div><span class="live-tag">● LIVE</span></div>
+          <div id="activityLog" class="activity-log"><div class="log-entry"><i class="log-dot"></i><span>Game initialized. Waiting for source code...</span><time>NOW</time></div></div>
+        </div>
+        <div class="tip-card"><div class="tip-icon">ⓘ</div><div><b>PRO TIP</b><p>Not every bug can be auto-fixed. Review the remaining warnings and errors before committing your code.</p></div></div>
+      </aside>
+    </section>
+    <footer><span>TASKOCALYPSE <b>© 2026</b></span><span>POWERED BY <b>ESLINT</b> + <b>FLASK</b></span><span class="footer-tag">MAKE WORK PLAY.</span></footer>
+  </main>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
